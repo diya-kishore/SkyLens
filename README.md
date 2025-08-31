@@ -116,5 +116,9 @@ Email: diyakishore15@example.com
 
 ## Screenshots
 
-_Add screenshots of your app here to showcase features._
+<img width="1598" height="769" alt="ss1" src="https://github.com/user-attachments/assets/23b7cd27-eb2d-40a0-ba24-6a5e081814fa" />
+<img width="1600" height="764" alt="ss2" src="https://github.com/user-attachments/assets/89a1d617-b7af-4503-9bce-25d259825742" />
+<img width="1600" height="764" alt="ss2" src="https://github.com/user-attachments/assets/29e31c57-6fc9-458f-b76f-36c532c4a2a7" />
+
+<img width="1600" height="763" alt="SS4" src="https://github.com/user-attachments/assets/236573d3-a61a-4e9f-99d4-cbcce7393d6d" />
 
