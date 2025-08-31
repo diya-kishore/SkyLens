@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Star Wiki</title>
+<style>
+  /* Background and body */
+  body {
+    font-family: 'Press Start 2P', monospace, cursive;
+    background-image: url('starwikibg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin: 0;
+    height: 100vh;
+    color: #c0c0c0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem;
+  }
+  /* Frosted glass container */
+  .frosted-window {
+    margin-top: 2rem;
+    background: rgba(17, 17, 51, 0.6);
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(68, 102, 255, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    user-select: none;
+  }
+  h1 {
+    color: #88aaff;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  form {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 600px;
+  }
+  input[type="text"] {
+    font-family: 'Press Start 2P', monospace, cursive;
+    font-size: 1rem;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 2px solid #4455aa;
+    background: #222244cc;
+    color: #eee;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  button {
+    font-family: 'Press Start 2P', monospace, cursive;
+    font-size: 1rem;
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: 2px solid #8899cc;
+    background: #4455aa;
+    color: #eee;
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  button:hover {
+    background: #6677cc;
+    border-color: #aabbff;
+  }
+  .star-info p {
+    margin: 10px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>Star Wiki</h1>
+
+<form id="starForm" class="frosted-window" aria-label="Star search form">
+  <input type="text" id="starName" placeholder="Enter star name (e.g., Sirius)" required aria-label="Star name input" />
+  <button type="submit" aria-label="Search star information">Search</button>
+</form>
+
+<div id="result" class="frosted-window" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+  const form = document.getElementById('starForm');
+  const starNameInput = document.getElementById('starName');
+  const resultDiv = document.getElementById('result');
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const starName = starNameInput.value.trim();
+    if (!starName) return;
+
+    resultDiv.innerHTML = 'Loading star information...';
+
+    try {
+      const response = await fetch(`https://api.api-ninjas.com/v1/stars?name=${encodeURIComponent(starName)}`, {
+        headers: { 'X-Api-Key': '4cToGayJEEaabSkuJDQvxA==KAJjmqpV1AoSNHe9' }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (!data || data.length === 0) {
+        resultDiv.innerHTML = `<p>No star found with name <strong>${starName}</strong>.</p>`;
+        return;
+      }
+
+      const star = data[0];
+      resultDiv.innerHTML = `
+        <div class="star-info">
+          <p><strong>Name:</strong> ${star.name}</p>
+          <p><strong>Distance (ly):</strong> ${star.distance_light_years}</p>
+          <p><strong>Constellation:</strong> ${star.constellation}</p>
+          <p><strong>Apparent Magnitude:</strong> ${star.apparent_magnitude}</p>
+          <p><strong>Absolute Magnitude:</strong> ${star.absolute_magnitude}</p>
+          <p><strong>Spectral Type:</strong> ${star.spectral_type}</p>
+          <p><strong>Other Names:</strong> ${star.other_names?.join(', ') || 'N/A'}</p>
+        </div>
+      `;
+    } catch (error) {
+      resultDiv.innerHTML = `<p>Error fetching star info: ${error.message}</p>`;
+    }
+  });
+</script>
+
+</body>
+</html>

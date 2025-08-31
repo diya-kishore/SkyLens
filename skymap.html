@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Live Night Sky</title>
+<link rel="stylesheet" href="https://aladin.u-strasbg.fr/AladinLite/api/v3/latest/aladin.css" />
+<style>
+  body {
+    margin: 0;
+    font-family: 'Press Start 2P', cursive, monospace;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    user-select: none;
+  }
+  #status {
+    margin: 1rem;
+    font-size: 1.2rem;
+  }
+  #aladin-container {
+    width: 90vw;
+    max-width: 960px;
+    height: 80vh;
+    border-radius: 12px;
+    box-shadow: 0 0 30px #2196f3aa;
+  }
+</style>
+</head>
+<body>
+
+<div id="status">Determining your location to show the night sky...</div>
+<div id="aladin-container" aria-label="Live night sky map"></div>
+
+<script src="https://aladin.u-strasbg.fr/AladinLite/api/v3/latest/aladin.js" charset="utf-8"></script>
+<script>
+  const statusEl = document.getElementById('status');
+
+  function initSky(latitude, longitude) {
+    statusEl.textContent = `Night sky centered at Lat: ${latitude.toFixed(4)}°, Lon: ${longitude.toFixed(4)}°`;
+
+    const aladin = A.aladin('#aladin-container', {
+      target: `${longitude} ${latitude}`,
+      fov: 60,
+      cooFrame: 'ICRS',
+      survey: 'P/DSS2/color',
+      showLayersControl: true,
+      showSimbadPointerControl: true,
+      showFullScreenControl: true,
+      showCooGrid: true,
+      showGotoControl: true
+    });
+
+    aladin.constellationsOn();
+    aladin.showMilkyWay(true);
+  }
+
+  function handleLocationError(error) {
+    statusEl.textContent = 'Location could not be determined. Showing default sky at Greenwich.' + (error ? ` Error: ${error.message}` : '');
+    initSky(51.48, 0); // Default to Greenwich
+  }
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => initSky(pos.coords.latitude, pos.coords.longitude),
+      handleLocationError,
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
+    );
+  } else {
+    statusEl.textContent = "Geolocation not supported by your browser. Showing default sky at Greenwich.";
+    initSky(51.48, 0);
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  --bg-color: #1a1a2e; /* Darker than previous for crispness */
+  --text-color: #e0e0e0;
+  --btn-bg: #222244;
+  --btn-hover-bg: #4455aa;
+  --btn-border: #7788cc;
+  --btn-shadow: #00114488;
+  --btn-hover-shadow: #3366ffbb;
+  --overlay-color: rgba(10, 10, 20, 0.6);
+}
+
+body {
+  margin: 0;
+  font-family: 'Press Start 2P', monospace, cursive;
+  background-image: url('nightbg.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 100vh;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" viewBox="0 0 16 24"><polygon fill="white" points="0,0 12,12 6,12 9,24 6,24 3,15 0,15"/></svg>') 0 0, auto;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: var(--overlay-color);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sky-btn {
+  font-weight: 700;
+  font-size: 1.2em;
+  padding: 14px 32px;
+  margin-bottom: 3rem;
+  background: var(--btn-bg);
+  border: 3px solid var(--btn-border);
+  border-radius: 10px;
+  color: var(--text-color);
+  box-shadow:
+    0 0 8px var(--btn-shadow),
+    inset 0 0 6px #0006;
+  text-shadow: 0 0 4px #0009;
+  user-select: none;
+  display: block;
+  width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: default;
+  transition: all 0.3s ease;
+}
+
+.sky-btn:hover,
+.sky-btn:focus {
+  background-color: var(--btn-hover-bg);
+  border-color: var(--btn-hover-shadow);
+  box-shadow:
+    0 0 24px var(--btn-hover-shadow),
+    inset 0 0 10px #000a;
+  color: #eee;
+  transform: translateY(-2px) scale(1.05);
+  outline: none;
+}
+
+.buttons {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  z-index: 1;
+}
+
+.btn {
+  font-weight: 700;
+  font-size: 1em;
+  padding: 18px 38px;
+  border-radius: 8px;
+  background-color: var(--btn-bg);
+  border: 3px solid var(--btn-border);
+  color: var(--text-color);
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  box-shadow:
+    0 0 10px var(--btn-shadow),
+    inset 0 0 6px #0004;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: var(--btn-hover-bg);
+  border-color: var(--btn-hover-shadow);
+  box-shadow:
+    0 0 22px var(--btn-hover-shadow),
+    inset 0 0 14px #000a;
+  color: #fff;
+  transform: translateY(-2px) scale(1.1);
+  outline: none;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  color: var(--text-color);
+  font-family: 'Press Start 2P', monospace, cursive;
+  font-size: 0.75em;
+  padding: 12px 0;
+  text-align: center;
+  user-select: none;
+  text-shadow: 0 0 5px #0009;
+  background: transparent;
+}
